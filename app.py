@@ -3,19 +3,18 @@ import scipy.stats
 import streamlit as st
 import time
 
-# estas son variables de estado que se conservan cuando Streamlin vuelve a ejecutar este script
+# Estas son variables de estado que se conservan cuando Streamlit vuelve a ejecutar este script
 if 'experiment_no' not in st.session_state:
     st.session_state['experiment_no'] = 0
 
 if 'df_experiment_results' not in st.session_state:
-    st.session_state['df_experiment_results'] = pd.DataFrame(columns=['no', 'iteraciones', 'media'])
+    st.session_state['df_experiment_results'] = pd.DataFrame(columns=['no', 'iterations', 'mean'])
 
 st.header('Lanzar una moneda')
 
 chart = st.line_chart([0.5])
 
 def toss_coin(n):
-
     trial_outcomes = scipy.stats.bernoulli.rvs(p=0.5, size=n)
 
     mean = None
@@ -23,7 +22,7 @@ def toss_coin(n):
     outcome_1_count = 0
 
     for r in trial_outcomes:
-        outcome_no +=1
+        outcome_no += 1
         if r == 1:
             outcome_1_count += 1
         mean = outcome_1_count / outcome_no
@@ -45,9 +44,7 @@ if start_button:
                             number_of_trials,
                             mean]],
                      columns=['no', 'iterations', 'mean'])
-        ],
-        axis=0)
-    st.session_state['df_experiment_results'] = 
-        st.session_state['df_experiment_results'].reset_index(drop=True)
+    ], axis=0)
+    st.session_state['df_experiment_results'] = st.session_state['df_experiment_results'].reset_index(drop=True)
 
 st.write(st.session_state['df_experiment_results'])
